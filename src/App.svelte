@@ -46,7 +46,7 @@
       <div class="col m10 s12">
         <p class="quote">
           Remember, we are all just ants stuck on a rock hurtling through space
-          at nearly 107 000 km/h... So relax and be nice! =)
+          at 107 000 km/h... So relax and be nice! =)
         </p>
       </div>
     </div>
