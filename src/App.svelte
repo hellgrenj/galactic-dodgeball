@@ -1,48 +1,49 @@
 <script>
   import { onMount } from "svelte";
-  export let date;
+  export let report;
 
   onMount(async () => {
-    const res = await fetch("/api/date");
-    const newDate = await res.text();
-    date = newDate;
+    const res = await fetch("/api/neo");
+    const newReport = await res.json();
+    report = newReport;
   });
 </script>
 
+
+<style>
+.report-text {
+   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace, serif;
+}
+.quote {
+   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 0.92em;
+  font-style: italic
+}
+
+</style>
+
 <main>
-  <h1>Svelte + Node.js API</h1>
-  <h2>
-    Deployed with
-    <a href="https://vercel.com/docs" target="_blank" rel="noreferrer noopener">
-      Vercel
-    </a>
-    !
-  </h2>
-  <p>
-    <a
-      href="https://github.com/vercel/vercel/tree/master/examples/svelte"
-      target="_blank"
-      rel="noreferrer noopener">
-      This project
-    </a>
-    is a
-    <a href="https://svelte.dev/">Svelte</a>
-    app with three directories,
-    <code>/public</code>
-    for static assets,
-    <code>/src</code>
-    for components and content, and
-    <code>/api</code>
-    which contains a serverless
-    <a href="https://nodejs.org/en/">Node.js</a>
-    function. See
-    <a href="/api/date">
-      <code>api/date</code>
-      for the Date API with Node.js
-    </a>
-    .
-  </p>
-  <br />
-  <h2>The date according to Node.js is:</h2>
-  <p>{date ? date : 'Loading date...'}</p>
+  <div class="container">
+    <div class="row header">
+      <div class="col m10 s12">
+        <h2>Near Earth Objects report for {report ? report.today : 'today'}</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col m10 s12 report-text">
+        {@html report ? report.text : 'Loading report...'}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col m10 s12">
+        <p class="quote">
+          Remember, we are all just ants stuck on a rock hurtling through space
+          at nearly 1700 km/hr... So relax and be nice! =)
+        </p>
+      </div>
+    </div>
+  </div>
 </main>
