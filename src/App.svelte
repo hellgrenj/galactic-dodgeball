@@ -20,6 +20,9 @@
     font-size: 0.92em;
     font-style: italic;
   }
+  .source {
+    font-size: 0.92em;
+  }
 </style>
 
 <main>
@@ -32,9 +35,9 @@
     <div class="row">
       <div class="col m10 s12 report-text">
         {@html report ? report.text : 'Loading report...'}
-        <p>
+        <p class="source">
           (source: <a href="https://api.nasa.gov/">
-            the Asteroids - NeoWs API from NASA</a>)
+            NASA Asteroids NeoWs API</a>)
         </p>
       </div>
     </div>
