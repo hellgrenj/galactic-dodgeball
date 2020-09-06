@@ -97,7 +97,7 @@ thats like driving thru Sweden  <span style='font-weight:600;'>${
     report.minDia.toString()
   } </span> and <span style='font-weight:600;'> ${
     report.maxDia.toString()
-  } </span> meters in diameter travelling at a speed (relative to us) 
+  } </span> meters in diameter travelling at a speed 
 of  <span style='font-weight:600;color:red;'>${formatNumberString(report.kmPerSecond)}</span> km per second (${
     formatNumberString(report.kmPerHour)
   } km per hour)</p>
