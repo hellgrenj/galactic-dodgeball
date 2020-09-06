@@ -9,19 +9,17 @@
   });
 </script>
 
-
 <style>
-.report-text {
-   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace, serif;
-}
-.quote {
-   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace, serif;
-  font-size: 0.92em;
-  font-style: italic
-}
-
+  .report-text {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  }
+  .quote {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+    font-size: 0.92em;
+    font-style: italic;
+  }
 </style>
 
 <main>
@@ -34,9 +32,11 @@
     <div class="row">
       <div class="col m10 s12 report-text">
         {@html report ? report.text : 'Loading report...'}
+        <p>
+          (source: <a href="https://api.nasa.gov/">
+            the Asteroids - NeoWs API from NASA</a>)
+        </p>
       </div>
-      <div>
-      (source: <a href="https://api.nasa.gov/"> the Asteroids - NeoWs API from NASA.</a>)
     </div>
 
     <div class="row">
