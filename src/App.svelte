@@ -35,6 +35,8 @@
       <div class="col m10 s12 report-text">
         {@html report ? report.text : 'Loading report...'}
       </div>
+      <div>
+      (source: <a href="https://api.nasa.gov/"> the Asteroids - NeoWs API from NASA.</a>)
     </div>
 
     <div class="row">
