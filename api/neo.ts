@@ -15,7 +15,15 @@ export default async (req: ServerRequest) => {
   console.log(today);
   const response = await fetchNearEarthObjects(today);
   const report = createHTMLReport(response);
-  req.respond({ body: JSON.stringify({ text: report, today }) });
+
+  const headers = new Headers();
+	headers.set('Cache-Control', "max-age=3600, public");
+  req.respond(
+    {
+      headers,
+      body: JSON.stringify({ text: report, today }),
+    },
+  );
 };
 
 const fetchNearEarthObjects = async (today: string) => {
