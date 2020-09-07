@@ -1,7 +1,8 @@
 
 https://dodgeball.johanhellgren.se/
 
-vercel
-svelte
-serverless
-deno 
+vercel. 
+svelte. 
+serverless. 
+deno. 
+
