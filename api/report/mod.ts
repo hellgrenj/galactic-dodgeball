@@ -10,6 +10,7 @@ import {
   numberOfHazardousObjects,
   consideredPotentiallyHazardous,
 } from "../hazard/mod.ts";
+import { toHTML } from "../toHTML/mod.ts";
 import { pipe } from "../util/mod.ts";
 
 interface Report {
@@ -25,6 +26,23 @@ interface Report {
   noHazardous: number;
   noObjects: number;
 }
+
+interface TransformedReport {
+  closestDistanceInKm: string;
+  minDia: string;
+  maxDia: string;
+  kmPerSecond: string;
+  kmPerHour: string;
+  closeApproachDate: string;
+  scandinavanMiles: string;
+  timesSwedensLength: string;
+  hazardous: boolean;
+  noHazardous: string;
+  noObjects: string;
+}
+
+type HTMLGenerator = (report: TransformedReport) => string;
+
 /** 
 takes a response from the NEO WS API and returns a report
 @param {any} response - the API Response
@@ -33,7 +51,7 @@ takes a response from the NEO WS API and returns a report
 export const createHTMLReport = (
   response: any,
 ): string => {
-  return pipe(constructReport, formatHTMLReport)(response);
+  return pipe(constructReport, transformReport, formatHTMLReport)(response);
 };
 
 const constructReport = (response: any): Report => {
@@ -69,44 +87,49 @@ const constructReport = (response: any): Report => {
     noObjects,
   } as Report;
 };
-const formatHTMLReport = (
-  report: Report,
-): string => {
-  return `<p> In total <span style='font-weight:600;'>${
-     report.noObjects.toString()
-  } </span> near earth objects (Asteroids...) where found and <span style='font-weight:600;'>${
-   report.noHazardous.toString()
-  } </span> where considered hazardous.</p>
-            
-<p>The closest one passed/will pass just  <span style='font-weight:600;'>${
-   
-      formatNumberString(report.closestDistanceInKm)
-    
-  } </span>km from earth (${
-   
-      formatNumberString(report.scandinavanMiles)
-    
-  } scandinavian miles)
-thats like driving thru Sweden  <span style='font-weight:600;'>${
-   formatNumberString(report.timesSwedensLength)
-  } </span> times.</p>
 
-<p>Date and time for this close approach is  <span style='font-weight:600;'>${report.closeApproachDate}</span></p>
-            
-<p>This object is estimated to be between <span style='font-weight:600;'>${
-    report.minDia.toString()
-  } </span> and <span style='font-weight:600;'> ${
-    report.maxDia.toString()
-  } </span> meters in diameter travelling at a speed 
-of  <span style='font-weight:600;color:red;'>${formatNumberString(report.kmPerSecond)}</span> km per second (${
-    formatNumberString(report.kmPerHour)
-  } km per hour)</p>
-            
-<p>This object is ${
-    report.hazardous ? ("<span style='font-weight:600;color:red;'>(!)</span>") : "<span style='font-weight:600;color:green;'>NOT</span>"
-  } considered potentially hazardous</p>
-            `.trim();
-};
 const formatNumberString = (n: number): string => {
   return n.toString().replace(/(\d)(?=(\d{3})+$)/g, "$1 ");
 };
+
+const transformReport = (report: Report): TransformedReport => ({
+  closestDistanceInKm: formatNumberString(report.closestDistanceInKm),
+  minDia: report.minDia.toString(),
+  maxDia: report.maxDia.toString(),
+  kmPerSecond: formatNumberString(report.kmPerSecond),
+  kmPerHour: formatNumberString(report.kmPerHour),
+  closeApproachDate: report.closeApproachDate,
+  scandinavanMiles: formatNumberString(report.scandinavanMiles),
+  timesSwedensLength: formatNumberString(report.timesSwedensLength),
+  hazardous: report.hazardous,
+  noHazardous: report.noHazardous.toString(),
+  noObjects: report.noObjects.toString(),
+});
+
+const createHTMLFromReport = (...HTMLGenerators: HTMLGenerator[]) => (
+  report: TransformedReport,
+): string => HTMLGenerators.reduce((acc, currentGeneratorFn) => `${acc}${currentGeneratorFn(report)}`, '');
+
+const toParagraph = (content: string) => toHTML('p', content);
+const toBold = (content: string) => toHTML('span', content, ['style', 'font-weight:600']);
+const toBoldWithColor = (content: string, color: string) => toHTML('span', content, ['style', `font-weight:600;color:${color}`]);
+
+const text1 = ({ noObjects, noHazardous }: TransformedReport): string => toParagraph(
+  `In total ${toBold(noObjects)} near earth objects (Asteroids...) were found and ${toBold(noHazardous)} were considered hazardous.`
+);
+const text2 = ({ closestDistanceInKm, scandinavanMiles, timesSwedensLength }: TransformedReport) => toParagraph(
+  `The closest one passed/will pass just ${toBold(closestDistanceInKm)} km from earth (${toBold(scandinavanMiles)} scandinavian miles) 
+  thats like driving thru Sweden ${toBold(timesSwedensLength)} times.`
+);
+const text3 = ({ closeApproachDate }: TransformedReport) => toParagraph(
+  `Date and time for this close approach is ${toBold(closeApproachDate)}`
+);
+const text4 = ({ minDia, maxDia, kmPerSecond, kmPerHour }: TransformedReport) => toParagraph(
+  `This object is estimated to be between ${toBold(minDia)} and ${toBold(maxDia)} meters in diameter 
+  travelling at a speed of ${toBold(kmPerSecond)} km per second (${toBold(kmPerHour)} km per hour)`
+);
+const text5 = ({ hazardous }: TransformedReport) => toParagraph(
+  `This object is ${hazardous ? toBoldWithColor('(!)', 'red') : toBoldWithColor('NOT', 'green')} considered potentially hazardous`
+);
+
+const formatHTMLReport = createHTMLFromReport(text1, text2, text3, text4, text5);
