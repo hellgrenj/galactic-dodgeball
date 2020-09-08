@@ -10,5 +10,5 @@ deno.
 functional core, imperative shell.     
 [Asteroids - NeoWs API from NASA](https://api.nasa.gov/)    
 
-Powered by (sandstreampop)[https://github.com/sandstreampop]
+Powered by [sandstreampop](https://github.com/sandstreampop)
 
