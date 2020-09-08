@@ -43,10 +43,10 @@
     </div>
 
     <div class="row">
-      <div class="col m10 s12">
+      <div class="col s12">
         <p class="quote">
           Remember, we are all just ants stuck on a rock hurtling through space
-          at 107 000 km/h... So relax and be nice! =)
+          at 107 000 km per hour... So relax and be nice! =)
         </p>
       </div>
     </div>

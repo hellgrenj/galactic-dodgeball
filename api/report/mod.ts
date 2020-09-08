@@ -91,7 +91,7 @@ thats like driving thru Sweden  <span style='font-weight:600;'>${
    formatNumberString(report.timesSwedensLength)
   } </span> times.</p>
 
-<p>Date and time for this close approach is  <span style='font-weight:600;'><br/>${report.closeApproachDate}</span></p>
+<p>Date and time for this close approach is  <span style='font-weight:600;'>${report.closeApproachDate}</span></p>
             
 <p>This object is estimated to be between <span style='font-weight:600;'>${
     report.minDia.toString()
