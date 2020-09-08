@@ -29,7 +29,7 @@
   <div class="container">
     <div class="row header">
       <div class="col m10 s12">
-        <h2>Near Earth Objects report for {report ? report.today : 'today'}</h2>
+        <h2>Galactic Dodgeball report for {report ? report.today : 'today'}</h2>
       </div>
     </div>
     <div class="row">

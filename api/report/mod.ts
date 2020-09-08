@@ -74,7 +74,7 @@ const formatHTMLReport = (
 ): string => {
   return `<p> In total <span style='font-weight:600;'>${
      report.noObjects.toString()
-  } </span> objects where found and <span style='font-weight:600;'>${
+  } </span> near earth objects (Asteroids...) where found and <span style='font-weight:600;'>${
    report.noHazardous.toString()
   } </span> where considered hazardous.</p>
             
