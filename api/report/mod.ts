@@ -114,22 +114,28 @@ const toParagraph = (content: string) => toHTML('p', content);
 const toBold = (content: string) => toHTML('span', content, ['style', 'font-weight:600']);
 const toBoldWithColor = (content: string, color: string) => toHTML('span', content, ['style', `font-weight:600;color:${color}`]);
 
-const text1 = ({ noObjects, noHazardous }: TransformedReport): string => toParagraph(
+const generateParagraph1 = ({ noObjects, noHazardous }: TransformedReport): string => toParagraph(
   `In total ${toBold(noObjects)} near earth objects (Asteroids...) were found and ${toBold(noHazardous)} were considered hazardous.`
 );
-const text2 = ({ closestDistanceInKm, scandinavanMiles, timesSwedensLength }: TransformedReport) => toParagraph(
+const generateParagraph2 = ({ closestDistanceInKm, scandinavanMiles, timesSwedensLength }: TransformedReport) => toParagraph(
   `The closest one passed/will pass just ${toBold(closestDistanceInKm)} km from earth (${toBold(scandinavanMiles)} scandinavian miles) 
   thats like driving thru Sweden ${toBold(timesSwedensLength)} times.`
 );
-const text3 = ({ closeApproachDate }: TransformedReport) => toParagraph(
+const generateParagraph3 = ({ closeApproachDate }: TransformedReport) => toParagraph(
   `Date and time for this close approach is ${toBold(closeApproachDate)}`
 );
-const text4 = ({ minDia, maxDia, kmPerSecond, kmPerHour }: TransformedReport) => toParagraph(
+const generateParagraph4 = ({ minDia, maxDia, kmPerSecond, kmPerHour }: TransformedReport) => toParagraph(
   `This object is estimated to be between ${toBold(minDia)} and ${toBold(maxDia)} meters in diameter 
   travelling at a speed of ${toBold(kmPerSecond)} km per second (${toBold(kmPerHour)} km per hour)`
 );
-const text5 = ({ hazardous }: TransformedReport) => toParagraph(
+const generateParagraph5 = ({ hazardous }: TransformedReport) => toParagraph(
   `This object is ${hazardous ? toBoldWithColor('(!)', 'red') : toBoldWithColor('NOT', 'green')} considered potentially hazardous`
 );
 
-const formatHTMLReport = createHTMLFromReport(text1, text2, text3, text4, text5);
+const formatHTMLReport = createHTMLFromReport(
+  generateParagraph1,
+  generateParagraph2,
+  generateParagraph3,
+  generateParagraph4,
+  generateParagraph5
+);
